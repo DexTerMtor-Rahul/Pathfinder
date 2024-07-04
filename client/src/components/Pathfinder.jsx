@@ -4,7 +4,7 @@ import Node from "./Node";
 
 const Pathfinder = () => {
   const [grid, setGrid] = useState([]);
-  const [srcDesClicked, setSrcDesClicked] = useState("");
+  const [mainClicked, setMainClicked] = useState("");
   const [mouseIsPressed, setMouseIsPressed] = useState(false);
   const [startNode, setStartNode] = useState(null);
   const [endNode, setEndNode] = useState(null);
@@ -40,15 +40,18 @@ const Pathfinder = () => {
     newGrid[end_x][end_y].isEnd = true;
 
     setGrid(newGrid);
-    setStartNode(newGrid[start_x][start_y]);
-    setEndNode(newGrid[end_x][end_y]);
+    setStartNode([start_x, start_y]);
+    setEndNode([end_x, end_y]);
   };
 
   const handleMouseDown = (row, col) => {
     let newGrid = [...grid];
-    if (newGrid[row][col].isStart || newGrid[row][col].isEnd) {
-      setSrcDesClicked("block");
+    if (newGrid[row][col].isStart) {
+      setMainClicked("start");
+    } else if (newGrid[row][col].isEnd) {
+      setMainClicked("end");
     }
+
     if (!newGrid[row][col].isStart && !newGrid[row][col].isEnd) {
       newGrid[row][col].isWall = !newGrid[row][col].isWall;
     }
@@ -59,11 +62,14 @@ const Pathfinder = () => {
   const handleMouseEnter = (row, col) => {
     if (!mouseIsPressed) return;
     let newGrid = [...grid];
-    if (srcDesClicked === "block") {
+    if (mainClicked === "start") {
       newGrid[row][col].isStart = true;
+      newGrid[row][col].isWall = false;
+      setStartNode([row, col]);
+    } else if (mainClicked === "end") {
       newGrid[row][col].isEnd = true;
       newGrid[row][col].isWall = false;
-      setStartNode(newGrid[row][col]);
+      setEndNode([row, col]);
     } else {
       newGrid[row][col].isWall = !newGrid[row][col].isWall;
     }
@@ -73,7 +79,7 @@ const Pathfinder = () => {
 
   const handleMouseLeave = (row, col) => {
     let newGrid = [...grid];
-    if (srcDesClicked !== "") {
+    if (mainClicked !== "") {
       newGrid[row][col].isStart = false;
       newGrid[row][col].isEnd = false;
       setGrid(newGrid);
@@ -82,7 +88,7 @@ const Pathfinder = () => {
 
   const handleMouseUp = () => {
     setMouseIsPressed(false);
-    setSrcDesClicked("");
+    setMainClicked("");
   };
 
   useEffect(() => {
