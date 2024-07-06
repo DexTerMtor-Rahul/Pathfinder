@@ -34,7 +34,7 @@ const Node = ({
       onMouseDown={() => onMouseDown(row, col)}
       onMouseUp={() => onMouseUp()}
       onMouseLeave={() => onMouseLeave(row, col)}>
-      {value}
+      {/* {value} */}
     </td>
   );
 };

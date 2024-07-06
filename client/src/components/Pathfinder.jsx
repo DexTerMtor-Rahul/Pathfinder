@@ -10,9 +10,11 @@ import {
   Drawer,
   IconButton,
   List,
-  ListItem,
+  ListItemButton,
   ListItemText,
   TableContainer,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
@@ -32,6 +34,8 @@ const Pathfinder = () => {
   const [endNode, setEndNode] = useState(null);
   const [visitedNodes, setVisitedNodes] = useState(0);
   const [shortestPathNodes, setShortestPathNodes] = useState(0);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [method, setMethod] = useState("Algorithms");
   const animating = useRef(false);
 
   const makeGrid = useCallback(() => {
@@ -46,7 +50,8 @@ const Pathfinder = () => {
       let currentRow = [];
       for (let col = 0; col < colSize; col++) {
         currentRow.push({
-          value: Math.floor(Math.random() * 10) + 1,
+          // value: Math.floor(Math.random() * 10) + 1,
+          value: 1,
           row: row,
           col: col,
           isVisited: false,
@@ -137,9 +142,10 @@ const Pathfinder = () => {
 
   const dijkstraSearch = (e) => {
     e.preventDefault();
-    if (animating.current) return;
+    if (animating.current || method !== "Dijkstra's Algorithm") return;
 
     const { visited_nodes, shortestPath } = Dijkstra(grid, startNode, endNode);
+    // console.log(visited_nodes, shortestPath);
     animating.current = true;
 
     const animate = async () => {
@@ -170,13 +176,28 @@ const Pathfinder = () => {
       animating.current = false;
     };
 
-    animate();
+    animate().then(() => {
+      if (shortestPath.length === 0) {
+        alert("No path found");
+      }
+    });
   };
 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = (open) => () => {
     setDrawerOpen(open);
+  };
+
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = (method) => {
+    setAnchorEl(null);
+    if (method) {
+      setMethod(method);
+    }
   };
 
   return (
@@ -189,15 +210,22 @@ const Pathfinder = () => {
           boxShadow: "none",
         }}>
         <Toolbar>
-          <Typography
-            variant="h6"
-            component="div"
+          <Box
             sx={{
+              display: "flex",
+              alignItems: "center",
               flexGrow: 1,
-              display: { xs: "block" },
             }}>
-            Pathfinder
-          </Typography>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{
+                display: { xs: "block" },
+                fontWeight: "bold",
+              }}>
+              Pathfinder
+            </Typography>
+          </Box>
 
           <Box
             sx={{
@@ -211,6 +239,20 @@ const Pathfinder = () => {
             <Button color="inherit" onClick={makeGrid}>
               Clear
             </Button>
+            <Button color="inherit" onClick={handleMenuClick}>
+              {method}
+            </Button>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={() => handleMenuClose(null)}>
+              <MenuItem onClick={() => handleMenuClose("Dijkstra's Algorithm")}>
+                Dijkstra's Algorithm
+              </MenuItem>
+              <MenuItem onClick={() => handleMenuClose("A* Search")}>
+                A* Search
+              </MenuItem>
+            </Menu>
           </Box>
 
           <Box
@@ -243,15 +285,15 @@ const Pathfinder = () => {
               onClick={toggleDrawer(false)}
               onKeyDown={toggleDrawer(false)}>
               <List>
-                <ListItem button component={NavLink} to="/" exact="true">
+                <ListItemButton component={NavLink} to="/" exact="true">
                   <ListItemText primary="Home" />
-                </ListItem>
-                <ListItem button onClick={makeGrid}>
+                </ListItemButton>
+                <ListItemButton onClick={makeGrid}>
                   <ListItemText primary="Clear" />
-                </ListItem>
-                <ListItem button onClick={dijkstraSearch}>
+                </ListItemButton>
+                <ListItemButton onClick={dijkstraSearch}>
                   <ListItemText primary="Find Path" />
-                </ListItem>
+                </ListItemButton>
               </List>
             </Box>
           </Drawer>
