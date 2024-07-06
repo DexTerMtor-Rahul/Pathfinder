@@ -1,7 +1,11 @@
 td {
   border: 1px solid #000000;
+  background-color: aliceblue;
   width: 25px;
   height: 25px;
+  padding: 0;
+  border-radius: 3px;
+  text-align: center;
 }
 tr {
   display: table-row;
@@ -9,15 +13,11 @@ tr {
   border-color: inherit;
 }
 table {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  z-index: -1;
+  margin: auto;
 }
+
 .node_start {
-  background-color: #00ff6a;
+  background-color: #09ff00;
 }
 .node_end {
   background-color: #ff0000;
@@ -89,6 +89,15 @@ table {
   100% {
     transform: scale(1);
     background-color: yellow;
+  }
+}
+
+@keyframes shadow-pulse {
+  0% {
+    box-shadow: 0 0 0 0 #343a40;
+  }
+  100% {
+    box-shadow: 0 0 0 20px rgba(130, 90, 164, 0);
   }
 }
 

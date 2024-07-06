@@ -1,6 +1,7 @@
 import React from "react";
 
 const Node = ({
+  value,
   row,
   col,
   isWall,
@@ -32,7 +33,9 @@ const Node = ({
       onMouseEnter={() => onMouseEnter(row, col)}
       onMouseDown={() => onMouseDown(row, col)}
       onMouseUp={() => onMouseUp()}
-      onMouseLeave={() => onMouseLeave(row, col)}></td>
+      onMouseLeave={() => onMouseLeave(row, col)}>
+      {value}
+    </td>
   );
 };
 
