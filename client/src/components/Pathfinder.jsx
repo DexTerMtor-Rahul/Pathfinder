@@ -21,6 +21,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
 import Dijkstra from "./algorithm/Dijkstras";
 import AStar from "./algorithm/AStar";
+import HomeIcon from "@mui/icons-material/HomeRounded";
+import MapIcon from "@mui/icons-material/MapRounded";
+import PathIcon from "@mui/icons-material/RouteRounded";
+import AlgoIcon from "@mui/icons-material/TuneRounded";
+import FindIcon from "@mui/icons-material/RocketRounded";
 
 const tableStyle = {
   margin: "auto",
@@ -134,6 +139,38 @@ const Pathfinder = () => {
     setMainClicked("");
   };
 
+  const clearPath = () => {
+    if (animating.current) return;
+    const newGrid = grid.map((row) =>
+      row.map((node) => ({
+        ...node,
+        isVisited: false,
+        isShortestPath: false,
+      }))
+    );
+    setGrid(newGrid);
+  };
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const toggleDrawer = (open) => () => {
+    setDrawerOpen(open);
+  };
+
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = (method) => {
+    setAnchorEl(null);
+    if (method) {
+      setMethod(method);
+      setVisitedNodes(0);
+      setShortestPathNodes(0);
+      clearPath();
+    }
+  };
+
   useEffect(() => {
     makeGrid();
     const handleResize = () => makeGrid();
@@ -150,6 +187,7 @@ const Pathfinder = () => {
       alert("Please select an algorithm");
       return;
     }
+
     const { visited_nodes, shortestPath } = (() => {
       switch (method) {
         case "Dijkstra's Algorithm":
@@ -199,23 +237,6 @@ const Pathfinder = () => {
     });
   };
 
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
-  const toggleDrawer = (open) => () => {
-    setDrawerOpen(open);
-  };
-
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = (method) => {
-    setAnchorEl(null);
-    if (method) {
-      setMethod(method);
-    }
-  };
-
   return (
     <div>
       <AppBar
@@ -245,17 +266,33 @@ const Pathfinder = () => {
 
           <Box
             sx={{
-              flexGrow: 1,
               display: { xs: "none", sm: "flex" },
               justifyContent: "flex-start",
+              alignItems: "center",
+              flexGrow: 1,
+              gap: "1rem",
             }}>
-            <Button color="inherit" component={NavLink} to="/" exact="true">
+            <Button
+              color="inherit"
+              startIcon={<HomeIcon />}
+              component={NavLink}
+              to="/"
+              exact="true">
               Home
             </Button>
-            <Button color="inherit" onClick={makeGrid}>
-              Clear
+            <Button startIcon={<MapIcon />} color="inherit" onClick={makeGrid}>
+              Change Map
             </Button>
-            <Button color="inherit" onClick={handleMenuClick}>
+            <Button
+              startIcon={<PathIcon />}
+              color="inherit"
+              onClick={clearPath}>
+              Clear Path
+            </Button>
+            <Button
+              color="inherit"
+              startIcon={<AlgoIcon />}
+              onClick={handleMenuClick}>
               {method}
             </Button>
             <Menu
@@ -275,7 +312,7 @@ const Pathfinder = () => {
             component="form"
             sx={{ display: { xs: "none", sm: "flex" } }}
             onSubmit={serachAlgorithm}>
-            <Button type="submit" color="inherit" variant="outlined">
+            <Button type="submit" color="inherit" startIcon={<FindIcon />}>
               Find Path
             </Button>
           </Box>

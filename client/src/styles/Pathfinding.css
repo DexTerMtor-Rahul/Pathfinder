@@ -21,15 +21,16 @@ table {
 }
 .node_wall {
   animation: pulse 0.5s 1;
-  background-color: #202220;
+  background-color: #08831d;
+  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.5);
 }
 
 @keyframes pulse {
   0% {
-    background-color: grey;
+    background-color: #797a79;
   }
   100% {
-    background-color: #202220;
+    background-color: #797a79;
   }
 }
 .node_visited {
@@ -61,8 +62,9 @@ table {
     background-color: rgba(4, 0, 255, 0.5);
   }
 }
+
 .node_path {
-  background-color: #00ff08;
+  background-color: #00ff1e;
   animation-name: path_anime;
   animation-duration: 2s;
   animation-timing-function: ease-out;
