@@ -15,15 +15,18 @@ import {
   TableContainer,
   Menu,
   MenuItem,
+  Paper,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
 import Dijkstra from "./algorithm/Dijkstras";
+import AStar from "./algorithm/AStar";
 
 const tableStyle = {
   margin: "auto",
   padding: "10px",
   width: "fit-content",
+  marginTop: "2rem",
 };
 
 const Pathfinder = () => {
@@ -138,13 +141,26 @@ const Pathfinder = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [makeGrid]);
 
-  //function for using dijkstra algorithm and visualizing it
+  //function for search algorithm and visualizing it
 
-  const dijkstraSearch = (e) => {
+  const serachAlgorithm = (e) => {
     e.preventDefault();
-    if (animating.current || method !== "Dijkstra's Algorithm") return;
+    if (animating.current) return;
+    if (method === "Algorithms") {
+      alert("Please select an algorithm");
+      return;
+    }
+    const { visited_nodes, shortestPath } = (() => {
+      switch (method) {
+        case "Dijkstra's Algorithm":
+          return Dijkstra(grid, startNode, endNode);
+        case "A* Search":
+          return AStar(grid, startNode, endNode);
+        default:
+          return { visited_nodes: [], shortestPath: [] };
+      }
+    })();
 
-    const { visited_nodes, shortestPath } = Dijkstra(grid, startNode, endNode);
     // console.log(visited_nodes, shortestPath);
     animating.current = true;
 
@@ -258,7 +274,7 @@ const Pathfinder = () => {
           <Box
             component="form"
             sx={{ display: { xs: "none", sm: "flex" } }}
-            onSubmit={dijkstraSearch}>
+            onSubmit={serachAlgorithm}>
             <Button type="submit" color="inherit" variant="outlined">
               Find Path
             </Button>
@@ -291,7 +307,7 @@ const Pathfinder = () => {
                 <ListItemButton onClick={makeGrid}>
                   <ListItemText primary="Clear" />
                 </ListItemButton>
-                <ListItemButton onClick={dijkstraSearch}>
+                <ListItemButton onClick={serachAlgorithm}>
                   <ListItemText primary="Find Path" />
                 </ListItemButton>
               </List>
@@ -300,7 +316,7 @@ const Pathfinder = () => {
         </Toolbar>
       </AppBar>
 
-      <TableContainer style={tableStyle}>
+      <TableContainer component={Paper} elevation={6} style={tableStyle}>
         <table>
           <tbody>
             {grid.map((row, index) => {

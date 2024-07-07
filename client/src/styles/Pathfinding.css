@@ -1,19 +1,16 @@
 td {
-  border: 1px solid #000000;
-  background-color: aliceblue;
+  background-color: rgb(225, 240, 252);
   width: 25px;
   height: 25px;
   padding: 0;
-  border-radius: 3px;
   text-align: center;
+  border-radius: 10%;
 }
-tr {
-  display: table-row;
-  vertical-align: inherit;
-  border-color: inherit;
-}
+
 table {
   margin: auto;
+  border-radius: 5px;
+  /* border-collapse: collapse; */
 }
 
 .node_start {
@@ -25,7 +22,6 @@ table {
 .node_wall {
   animation: pulse 0.5s 1;
   background-color: #202220;
-  border: 1px solid #202220;
 }
 
 @keyframes pulse {
@@ -72,7 +68,6 @@ table {
   animation-timing-function: ease-out;
   animation-delay: 0;
   animation-direction: alternate;
-  /* animation-iteration-count: infinite; */
   animation-fill-mode: none;
   animation-play-state: running;
 }
