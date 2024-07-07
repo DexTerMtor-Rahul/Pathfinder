@@ -34,6 +34,15 @@ const tableStyle = {
   marginTop: "2rem",
 };
 
+const AppBarStyle = {
+  width: "80%",
+  margin: "auto",
+  marginTop: "1rem",
+  borderRadius: "10px",
+  backgroundColor: "#FF0000",
+  boxShadow: "none",
+};
+
 const Pathfinder = () => {
   const [grid, setGrid] = useState([]);
   const [mainClicked, setMainClicked] = useState("");
@@ -239,13 +248,7 @@ const Pathfinder = () => {
 
   return (
     <div>
-      <AppBar
-        position="static"
-        sx={{
-          backgroundColor: "#FF0000",
-          borderRadius: "10px",
-          boxShadow: "none",
-        }}>
+      <AppBar position="static" style={AppBarStyle}>
         <Toolbar>
           <Box
             sx={{
