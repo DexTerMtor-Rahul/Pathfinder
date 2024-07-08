@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import "../styles/Pathfinding.css";
 import Node from "./Node";
+import Helmet from "react-helmet";
 import {
   AppBar,
   Toolbar,
@@ -248,6 +249,9 @@ const Pathfinder = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Pathfinder</title>
+      </Helmet>
       <AppBar position="static" style={AppBarStyle}>
         <Toolbar>
           <Box
@@ -284,7 +288,7 @@ const Pathfinder = () => {
               Home
             </Button>
             <Button startIcon={<MapIcon />} color="inherit" onClick={makeGrid}>
-              Change Map
+              Reset Map
             </Button>
             <Button
               startIcon={<PathIcon />}
