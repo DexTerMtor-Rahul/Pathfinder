@@ -22,6 +22,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
 import Dijkstra from "./algorithm/Dijkstras";
 import AStar from "./algorithm/AStar";
+import BFS from "./algorithm/BFS";
+import DFS from "./algorithm/DFS";
 import HomeIcon from "@mui/icons-material/HomeRounded";
 import MapIcon from "@mui/icons-material/MapRounded";
 import PathIcon from "@mui/icons-material/RouteRounded";
@@ -204,6 +206,10 @@ const Pathfinder = () => {
           return Dijkstra(grid, startNode, endNode);
         case "A* Search":
           return AStar(grid, startNode, endNode);
+        case "DFS":
+          return DFS(grid, startNode, endNode);
+        case "BFS":
+          return BFS(grid, startNode, endNode);
         default:
           return { visited_nodes: [], shortestPath: [] };
       }
@@ -266,6 +272,8 @@ const Pathfinder = () => {
               sx={{
                 display: { xs: "block" },
                 fontWeight: "bold",
+                fontFamily: "Nasalization, sans-serif;",
+                letterSpacing: "0.2rem",
               }}>
               Pathfinder
             </Typography>
@@ -312,6 +320,8 @@ const Pathfinder = () => {
               <MenuItem onClick={() => handleMenuClose("A* Search")}>
                 A* Search
               </MenuItem>
+              <MenuItem onClick={() => handleMenuClose("DFS")}>DFS</MenuItem>
+              <MenuItem onClick={() => handleMenuClose("BFS")}>BFS</MenuItem>
             </Menu>
           </Box>
 

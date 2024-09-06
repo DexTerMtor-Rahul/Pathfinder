@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Nasalization;
+  src: url(../assets/nasalization-rg.otf);
+}
+
 td {
   background-color: rgb(225, 240, 252);
   width: 25px;

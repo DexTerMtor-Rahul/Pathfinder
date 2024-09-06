@@ -1,0 +1,48 @@
+@font-face {
+  font-family: Nasalization;
+  src: url(../assets/nasalization-rg.otf);
+}
+.main-title {
+  font-size: 3rem;
+  color: white;
+  font-family: Nasalization, sans-serif;
+  letter-spacing: 5px;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.main-title span {
+  background-color: rgb(249, 232, 232);
+  color: #ff0000;
+  margin-right: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.appbar-title {
+  font-family: Nasalization, sans-serif;
+  color: red;
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+  font-weight: bold;
+}
+
+.appbar-title span {
+  background-color: rgb(248, 3, 3);
+  color: white;
+  margin-right: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.description-title {
+  color: white;
+  width: 70%;
+  margin: auto;
+}
+
+.description-title p {
+  font-size: 1.5rem;
+  text-align: justify;
+  line-height: 1.8rem;
+}
